@@ -1,6 +1,7 @@
 
 import React from 'react'
-import {gql, useQuery } from '@apollo/client';
+import {gql, useQuery} from '@apollo/client'
+import LaunchCard from './LaunchCard'
 
 const GET_LIST = gql`
   query GetList {
@@ -25,14 +26,16 @@ const {loading, error, data} = useQuery(GET_LIST)
 
 if(loading) return <p>loading</p>
 if(error) return <p>Error: {error.message}</p>
- return data.launchesPast.map(({id, mission_name, rocket, links})=>(
-    <div key={id}>
-    <h1>{mission_name}</h1>
-    <h2>{rocket.rocket_name}</h2>
-    <img src={links.mission_patch_small} width="200"/>
-    </div>
- ))
-
+ 
+ return (
+<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+   { data.launchesPast.map(({id, mission_name, rocket, links})=>{
+   return (
+   <LaunchCard id={id} mission_name={mission_name} rocket={rocket} links={links}/>
+   )
+}) }
+</div>
+ )
 
 }
 
