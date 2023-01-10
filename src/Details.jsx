@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
-
+import Carousel from "./Carousel";
 const LAUNCH_DETAILS = gql`
   query GetDetails($id: ID!) {
     launch(id: $id) {
@@ -32,5 +32,6 @@ export default function Details() {
   <div>
     <h1 className="font-sans font-bold text-4xl mb-4">{data.launch.mission_name}</h1>
     <p>{data.launch.details? data.launch.details: "Information on mission not availabe"}</p>
+    <Carousel images={data.launch.links.flickr_images}/>
   </div>)
 }
